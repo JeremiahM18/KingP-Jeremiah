@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &6278247581496205555
+--- !u!1001 &549790906150296211
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -50,19 +50,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1262538530842312713, guid: fd2687d3785835143af4f0e9c4db2638, type: 3}
       propertyPath: m_Name
-      value: Ball5
+      value: Ball0
       objectReference: {fileID: 0}
-    - target: {fileID: 7126762076373288388, guid: fd2687d3785835143af4f0e9c4db2638, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: -5546464156845659633, guid: f673d7f7b1d9fb24fb340dff2cdc8092, type: 3}
     - target: {fileID: 7268274071308859876, guid: fd2687d3785835143af4f0e9c4db2638, type: 3}
       propertyPath: maxSpeed
-      value: 14
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 7268274071308859876, guid: fd2687d3785835143af4f0e9c4db2638, type: 3}
       propertyPath: minSpeed
-      value: 0.75
+      value: 0.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

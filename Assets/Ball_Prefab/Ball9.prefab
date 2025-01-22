@@ -50,12 +50,20 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1262538530842312713, guid: fd2687d3785835143af4f0e9c4db2638, type: 3}
       propertyPath: m_Name
-      value: ball-cat_0 Variant 7
+      value: Ball9
       objectReference: {fileID: 0}
     - target: {fileID: 7126762076373288388, guid: fd2687d3785835143af4f0e9c4db2638, type: 3}
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: -3079722678121271134, guid: dcaf231177067c6458e2b48e330a758e, type: 3}
+    - target: {fileID: 7268274071308859876, guid: fd2687d3785835143af4f0e9c4db2638, type: 3}
+      propertyPath: maxSpeed
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 7268274071308859876, guid: fd2687d3785835143af4f0e9c4db2638, type: 3}
+      propertyPath: minSpeed
+      value: 0.25
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 264885201008125672}
   - component: {fileID: 7126762076373288388}
+  - component: {fileID: 7268274071308859876}
   m_Layer: 0
   m_Name: Ball
   m_TagString: Untagged
@@ -87,3 +88,23 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &7268274071308859876
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1262538530842312713}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f455821f1929324f8c4db9fae1d3745, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minX: -8.01
+  minY: -4
+  maxX: 8
+  maxY: 4.34
+  minSpeed: 1
+  maxSpeed: 10
+  targetPostion: {x: 0, y: 0}
+  secondsToMaxSpeed: 0
