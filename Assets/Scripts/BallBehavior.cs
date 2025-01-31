@@ -30,12 +30,17 @@ public class BallBehavior : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-       targetPostion = getRandomPosition();
+        targetPostion = getRandomPosition();
     }
 
     // Update is called once per frame
     void Update()
     {
+    }
+    private void FixedUpdate()
+    {
+
+
         if (onCooldown() == false)
         {
             if (launching == true)
@@ -81,7 +86,7 @@ public class BallBehavior : MonoBehaviour
         }
         else
         {   //     You are at target
-            if(launching == true)
+            if (launching == true)
             {
                 startCooldown();
             }
@@ -136,5 +141,10 @@ public class BallBehavior : MonoBehaviour
     {
         timeLastLaunch += Time.time;
         launching = false;
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        Debug.Log(this + " Collided with: " + collision.gameObject.name);
     }
 }
