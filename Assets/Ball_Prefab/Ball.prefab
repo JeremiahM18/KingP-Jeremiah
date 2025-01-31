@@ -108,3 +108,11 @@ MonoBehaviour:
   maxSpeed: 10
   targetPostion: {x: 0, y: 0}
   secondsToMaxSpeed: 0
+  target: {fileID: 4954610960700815250, guid: 34096a25ed0c8774998d8bc7a27c5d9d, type: 3}
+  minLaunchSpeed: 4
+  maxLaunchSpeed: 10
+  minTimeToLaunch: 0
+  cooldown: 7
+  launching: 0
+  launchDuration: 0
+  timeLastLaunch: 0

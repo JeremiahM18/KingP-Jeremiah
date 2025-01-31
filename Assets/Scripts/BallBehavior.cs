@@ -1,3 +1,4 @@
+using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 
 public class BallBehavior : MonoBehaviour
@@ -20,6 +21,7 @@ public class BallBehavior : MonoBehaviour
     public bool launching;
     public float launchDuration;
     public float timeLastLaunch;
+    public float timeLaunchStart;
 
 
 
@@ -28,41 +30,111 @@ public class BallBehavior : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        targetPostion = getRandomPosition();
+       targetPostion = getRandomPosition();
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (onCooldown() == false)
+        {
+            if (launching == true)
+            {
+                float currentLaunchTime = Time.time - timeLaunchStart;
+                if (currentLaunchTime > launchDuration)
+                {
+                    startCooldown();
+                }
+            }
+            else
+            {
+                Debug.Log("unim");
+                launch();
+            }
+        }
+
         Vector2 currentPos = gameObject.GetComponent<Transform>().position;
-        //float distance = Vector2.Distance((Vector2)transform.position, targetPosition);
-        if (targetPostion != currentPos)
+        float distance = Vector2.Distance((Vector2)transform.position, targetPostion);
+
+
+        if (distance > 0.1f)
         {
             float difficulty = getDifficultyPercentage();
-            float currentSpeed = Mathf.Lerp(minSpeed, maxSpeed, difficulty);
+            float currentSpeed;
+
+            if (launching == true)
+            {
+                float launchingForHowLong = Time.time - timeLaunchStart;
+                if (launchingForHowLong > launchDuration)
+                {
+                    startCooldown();
+                }
+                currentSpeed = Mathf.Lerp(minLaunchSpeed, maxLaunchSpeed, difficulty);
+            }
+            else
+            {
+                currentSpeed = Mathf.Lerp(minSpeed, maxSpeed, difficulty);
+            }
             currentSpeed = currentSpeed * Time.deltaTime;
             Vector2 newPosition = Vector2.MoveTowards(currentPos, targetPostion, currentSpeed);
             transform.position = newPosition;
         }
         else
-        {
+        {   //     You are at target
+            if(launching == true)
+            {
+                startCooldown();
+            }
             targetPostion = getRandomPosition();
         }
-        getRandomPosition();
     }
 
     Vector2 getRandomPosition()
     {
         float randomX = Random.Range(minX, maxX);
         float randomY = Random.Range(minY, maxY);
-        return new Vector2(randomX, randomY);
-        
+        Vector2 v = new Vector2(randomX, randomY);
+        return v;
+
     }
 
     public float getDifficultyPercentage()
     {
-        return Mathf.Clamp01(Time.timeSinceLevelLoad / secondsToMaxSpeed);
+        float difficulty = Mathf.Clamp01(Time.timeSinceLevelLoad / secondsToMaxSpeed);
+        return difficulty;
     }
 
+    public void launch()
+    {
 
+        targetPostion = target.transform.position;
+
+        if (launching == false)
+        {
+            timeLaunchStart = Time.time;
+            launching = true;
+
+        }
+    }
+
+    public bool onCooldown()
+    {
+        bool result = false;
+
+        float timeSinceLastLaunch = Time.time - timeLastLaunch;
+
+        if (timeSinceLastLaunch < cooldown)
+        {
+            result = true;
+        }
+
+
+        return result;
+    }
+
+    public void startCooldown()
+    {
+        timeLastLaunch += Time.time;
+        launching = false;
+    }
 }
