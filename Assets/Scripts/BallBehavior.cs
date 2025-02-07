@@ -23,6 +23,8 @@ public class BallBehavior : MonoBehaviour
     public float timeLastLaunch;
     public float timeLaunchStart;
 
+    Rigidbody2D body;
+
 
 
 
@@ -39,6 +41,10 @@ public class BallBehavior : MonoBehaviour
     }
     private void FixedUpdate()
     {
+        Vector2 currentPos = gameObject.GetComponent<Transform>().position;
+
+        body = GetComponent<Rigidbody2D>();
+        Vector2 currentPosition = body.position;
 
 
         if (onCooldown() == false)
@@ -58,8 +64,9 @@ public class BallBehavior : MonoBehaviour
             }
         }
 
-        Vector2 currentPos = gameObject.GetComponent<Transform>().position;
-        float distance = Vector2.Distance((Vector2)transform.position, targetPostion);
+        //Vector2 currentPos = gameObject.GetComponent<Transform>().position;
+        //float distance = Vector2.Distance((Vector2)transform.position, targetPostion);
+        float distance = Vector2.Distance(currentPosition, targetPostion);
 
 
         if (distance > 0.1f)
@@ -109,10 +116,17 @@ public class BallBehavior : MonoBehaviour
         return difficulty;
     }
 
+    public void initialPosition()
+    {
+        body = GetComponent<Rigidbody2D>();
+        body.position = getRandomPosition();
+    }
     public void launch()
     {
 
-        targetPostion = target.transform.position;
+        //targetPostion = target.transform.position;
+        Rigidbody2D targetBody = target.GetComponent<Rigidbody2D>();
+        targetPostion = targetBody.position;
 
         if (launching == false)
         {
@@ -146,5 +160,10 @@ public class BallBehavior : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         Debug.Log(this + " Collided with: " + collision.gameObject.name);
+        if(collision.gameObject.tag == "Wall")
+        {
+            targetPostion = getRandomPosition();
+        }
     }
+
 }

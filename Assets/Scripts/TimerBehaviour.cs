@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class TimerBehaviour : MonoBehaviour
 {
-    private float timer = 0.0f;
+    private float timer;
     private TextMeshProUGUI m_text;
 
 
@@ -11,7 +11,7 @@ public class TimerBehaviour : MonoBehaviour
     private void Start()
     {
         m_text = GetComponent<TextMeshProUGUI>();
-        Component[] cmps = GetComponents<Component>();
+        //Component[] cmps = GetComponents<Component>();
 
         if (m_text == null)
         {
@@ -24,14 +24,17 @@ public class TimerBehaviour : MonoBehaviour
     {
         timer = Time.time;
 
+        m_text.text = timer.ToString();
+
         if (m_text != null)
         {
             int minutes = Mathf.FloorToInt(timer / 60);
             int seconds = Mathf.FloorToInt(timer % 60);
             string timeLabel = 
-                string.Format("<color=black>Time: ,<color=#0080ff>{0:00}<color=black>:<color=#0080ff>{1:00}", minutes, seconds);
+                string.Format("<color=black>Time: <color=#0080ff>{0:00}<color=black>:<color=#0080ff>{1:00}", minutes, seconds);
 
-            m_text.SetText(timer.ToString());
+            //m_text.SetText(timer.ToString());
+            m_text.SetText(timeLabel);
         }
     }
 }
