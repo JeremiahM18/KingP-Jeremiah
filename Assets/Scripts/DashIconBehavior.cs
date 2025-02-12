@@ -29,7 +29,7 @@ public class DashIconBehavior : MonoBehaviour
         // Update is called once per frame
         void Update()
         {
-            // Cooldown = PinBehavior.cooldown;
+            //Cooldown = PinBehavior.cooldown;
             string message = "";
             if (coolDown > 0.0)
             {

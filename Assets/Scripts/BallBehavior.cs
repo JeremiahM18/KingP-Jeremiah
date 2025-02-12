@@ -3,10 +3,10 @@ using UnityEngine;
 
 public class BallBehavior : MonoBehaviour
 {
-    public float minX = -8.01f;
-    public float minY = -4.0f;
-    public float maxX = 8.0f;
-    public float maxY = 4.34f;
+    public float minX = -7.0f;
+    public float minY = -6.0f;
+    public float maxX = 7.0f;
+    public float maxY = 6.0f;
     public float minSpeed = 0.05f;
     public float maxSpeed = 15.0f;
     public Vector2 targetPostion;
@@ -24,7 +24,7 @@ public class BallBehavior : MonoBehaviour
     public float timeLaunchStart;
 
     Rigidbody2D body;
-
+    public bool rerouting;
 
 
 
@@ -120,6 +120,9 @@ public class BallBehavior : MonoBehaviour
     {
         body = GetComponent<Rigidbody2D>();
         body.position = getRandomPosition();
+        targetPostion = getRandomPosition();
+        launching = false;
+        rerouting = true;
     }
     public void launch()
     {
@@ -159,10 +162,45 @@ public class BallBehavior : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log(this + " Collided with: " + collision.gameObject.name);
+        Debug.Log(this + " Collided with: " + collision.gameObject.tag);
         if(collision.gameObject.tag == "Wall")
         {
             targetPostion = getRandomPosition();
+        }
+        if(collision.gameObject.tag == "Ball")
+        {
+            Reroute(collision);
+        }
+    }
+
+    private void OnCollisionStay(Collision collision)
+    {
+        Debug.Log(this + " Collided with: " + collision.gameObject.tag);
+        if (collision.gameObject.tag == "Wall")
+        {
+            targetPostion = getRandomPosition();
+        }
+       
+    }
+
+    public void Reroute(Collision2D collision)
+    {
+        GameObject otherBall = collision.gameObject;
+        if(rerouting == true)
+        {
+            otherBall.GetComponent<BallBehavior>().rerouting = false;
+
+            Rigidbody2D ballBody = otherBall.GetComponent<Rigidbody2D>();
+            Vector2 contact = collision.GetContact(0).normal;
+            targetPostion = Vector2.Reflect(targetPostion, contact).normalized;
+            launching = false;
+            float separationDistance = 0.1f;
+            ballBody.position += contact * separationDistance;
+
+        }
+        else
+        {
+            rerouting = true;
         }
     }
 

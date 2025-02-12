@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: -8991533598978943576}
   m_Layer: 0
   m_Name: Ball
-  m_TagString: Untagged
+  m_TagString: Ball
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -119,6 +119,7 @@ MonoBehaviour:
   launchDuration: 0
   timeLastLaunch: 0
   timeLaunchStart: 0
+  rerouting: 0
 --- !u!60 &-6663769735969788022
 PolygonCollider2D:
   m_ObjectHideFlags: 0
@@ -418,5 +419,5 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
