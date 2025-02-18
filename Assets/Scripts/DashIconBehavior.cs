@@ -1,7 +1,6 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
-using Unity.VisualScripting;
 
 public class DashIconBehavior : MonoBehaviour
 {
@@ -23,13 +22,13 @@ public class DashIconBehavior : MonoBehaviour
                 overlay = images[i];
             }
         }
-        //coolDownRate = PinBehavior.cooldownRate;
+        coolDownRate =PinBehavior.cooldownRate;
         overlay.fillAmount = 0.0f;
-
+    }
         // Update is called once per frame
         void Update()
         {
-            //Cooldown = PinBehavior.cooldown;
+            coolDown = PinBehavior.cooldown;
             string message = "";
             if (coolDown > 0.0)
             {
@@ -39,5 +38,5 @@ public class DashIconBehavior : MonoBehaviour
             }
             label.SetText(message);
         }
-    }
+    
 }

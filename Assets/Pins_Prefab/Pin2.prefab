@@ -8,6 +8,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -2080689570657683023, guid: 34096a25ed0c8774998d8bc7a27c5d9d, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.x
+      value: 3.27
+      objectReference: {fileID: 0}
+    - target: {fileID: -2080689570657683023, guid: 34096a25ed0c8774998d8bc7a27c5d9d, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.y
+      value: 8.98
+      objectReference: {fileID: 0}
     - target: {fileID: 4954610960700815250, guid: 34096a25ed0c8774998d8bc7a27c5d9d, type: 3}
       propertyPath: m_Name
       value: Pin2
@@ -26,7 +34,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8257841078807621773, guid: 34096a25ed0c8774998d8bc7a27c5d9d, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -0.1
       objectReference: {fileID: 0}
     - target: {fileID: 8257841078807621773, guid: 34096a25ed0c8774998d8bc7a27c5d9d, type: 3}
       propertyPath: m_LocalRotation.w

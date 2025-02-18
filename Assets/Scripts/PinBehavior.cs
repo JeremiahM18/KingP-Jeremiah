@@ -14,9 +14,9 @@ public class PinBehavior : MonoBehaviour
     public float dashSpeed = 8.0f;
     public float dashDuration = 0.3f;
     public bool dashing;
-    public float cooldownRate = 1.0f;
+    public static float cooldownRate = 1.0f;
     public float endLastDash;
-    public float cooldown = 0.0f;
+    public static float cooldown = 0.0f;
     public float speed;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -24,6 +24,8 @@ public class PinBehavior : MonoBehaviour
     {
         cam = Camera.main;
         dashing = false;
+        body = GetComponent<Rigidbody2D>();
+        speed = baseSpeed;
     }
 
     // Update is called once per frame
@@ -35,9 +37,8 @@ public class PinBehavior : MonoBehaviour
     }
     public void FixedUpdate()
     {
-        body = GetComponent<Rigidbody2D>();
         Vector2 currentPos = body.position;
-
+        Dash();
         mousePosG = cam.ScreenToWorldPoint(Input.mousePosition);
         newPosition = Vector2.MoveTowards(currentPos, mousePosG, speed * Time.fixedDeltaTime);
         body.MovePosition(newPosition);
@@ -49,8 +50,14 @@ public class PinBehavior : MonoBehaviour
         Debug.Log("Collided with " + collided);
         if (collided == "Ball" || collided == "Wall")
         {
-            Debug.Log("Game Over");
+            //Debug.Log("Game Over");
+            UnityEngine.SceneManagement.SceneManager.LoadScene("GameOver");
         }
+    }
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        Debug.Log("Staying in collision with " +  collision.gameObject.tag);
     }
 
     private void Dash()

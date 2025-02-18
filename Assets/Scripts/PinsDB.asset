@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 07f76ffc09210bd40a3627e35a77ef60, type: 3}
+  m_Name: PinsDB
+  m_EditorClassIdentifier: 
+  pins:
+  - prefab: {fileID: 613803997488762602, guid: 9fdfb718875ebe54ba056811449b29a6, type: 3}
+    name: Standard
+  - prefab: {fileID: 1823632671139928723, guid: fb1cfd6abcfd29e42bdb34f855880aa7, type: 3}
+    name: Hypnotize
+  - prefab: {fileID: 2510623213079616622, guid: 90b944f738f4d204b88dfec8e133d749, type: 3}
+    name: Fishing
+  - prefab: {fileID: 2761971882898546186, guid: 90b03ef57d90e9a4d9a42401be55748d, type: 3}
+    name: Chef
+  - prefab: {fileID: 2134379601443932358, guid: 895a4393971adb04982c7e80875e724c, type: 3}
+    name: Chocolate
+  - prefab: {fileID: 5754495229349144293, guid: eaea369be5501c3469569b1bbc94bdd5, type: 3}
+    name: Space Cowboy
+  - prefab: {fileID: 2911737018237233037, guid: 53902e4f7e911564cb139c5069275a23, type: 3}
+    name: Clown
+  - prefab: {fileID: 3047748955167648394, guid: c9f206ea3ffcd314295406bb51ea0ad2, type: 3}
+    name: Green

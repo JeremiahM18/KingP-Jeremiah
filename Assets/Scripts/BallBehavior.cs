@@ -1,4 +1,3 @@
-using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 
 public class BallBehavior : MonoBehaviour
@@ -33,6 +32,7 @@ public class BallBehavior : MonoBehaviour
     void Start()
     {
         targetPostion = getRandomPosition();
+        initialPosition();
     }
 
     // Update is called once per frame
@@ -43,29 +43,25 @@ public class BallBehavior : MonoBehaviour
     {
         Vector2 currentPos = gameObject.GetComponent<Transform>().position;
 
-        body = GetComponent<Rigidbody2D>();
         Vector2 currentPosition = body.position;
 
-
-        if (onCooldown() == false)
+        if (!onCooldown())
         {
-            if (launching == true)
+            if (launching)
             {
                 float currentLaunchTime = Time.time - timeLaunchStart;
-                if (currentLaunchTime > launchDuration)
+                if(currentLaunchTime > launchDuration)
                 {
+                    Debug.Log("Cooldown started.");
                     startCooldown();
                 }
-            }
-            else
+            } else
             {
-                Debug.Log("unim");
+                Debug.Log("Launching towards: " + targetPostion);
                 launch();
             }
         }
 
-        //Vector2 currentPos = gameObject.GetComponent<Transform>().position;
-        //float distance = Vector2.Distance((Vector2)transform.position, targetPostion);
         float distance = Vector2.Distance(currentPosition, targetPostion);
 
 
@@ -139,6 +135,22 @@ public class BallBehavior : MonoBehaviour
         }
     }
 
+    public void setBounds(float miX, float maX, float miY,  float maY)
+    {
+        minX = miX; 
+        maxX = maX; 
+        minY = miY;
+        maxY = maY;
+    }
+
+    public void setTarget(GameObject pin)
+    {
+        target = pin;
+        if (target != null)
+        {
+            targetPostion = target.transform.position;
+        }
+    }
     public bool onCooldown()
     {
         bool result = false;
@@ -156,7 +168,7 @@ public class BallBehavior : MonoBehaviour
 
     public void startCooldown()
     {
-        timeLastLaunch += Time.time;
+        timeLastLaunch = Time.time;
         launching = false;
     }
 
@@ -173,7 +185,7 @@ public class BallBehavior : MonoBehaviour
         }
     }
 
-    private void OnCollisionStay(Collision collision)
+    private void OnCollisionStay2D(Collision2D collision)
     {
         Debug.Log(this + " Collided with: " + collision.gameObject.tag);
         if (collision.gameObject.tag == "Wall")
@@ -192,9 +204,12 @@ public class BallBehavior : MonoBehaviour
 
             Rigidbody2D ballBody = otherBall.GetComponent<Rigidbody2D>();
             Vector2 contact = collision.GetContact(0).normal;
-            targetPostion = Vector2.Reflect(targetPostion, contact).normalized;
+            Vector2 direction = targetPostion - body.position;
+
+            targetPostion = Vector2.Reflect(direction, contact) + (contact * 0.5f);
+
             launching = false;
-            float separationDistance = 0.1f;
+            float separationDistance = 0.3f;
             ballBody.position += contact * separationDistance;
 
         }
