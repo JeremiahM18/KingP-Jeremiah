@@ -30,7 +30,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -3.49, y: 0.3, z: -0.1}
-  m_LocalScale: {x: 0.18, y: 0.18, z: 0.18}
+  m_LocalScale: {x: 0.12, y: 0.12, z: 0.12}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
@@ -106,8 +106,8 @@ MonoBehaviour:
   minY: -4
   maxX: 8
   maxY: 4.34
-  minSpeed: 1
-  maxSpeed: 10
+  minSpeed: 0.2
+  maxSpeed: 4
   targetPostion: {x: 0, y: 0}
   secondsToMaxSpeed: 0
   target: {fileID: 4954610960700815250, guid: 34096a25ed0c8774998d8bc7a27c5d9d, type: 3}

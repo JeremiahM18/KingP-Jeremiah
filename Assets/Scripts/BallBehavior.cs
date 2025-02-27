@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class BallBehavior : MonoBehaviour
@@ -31,6 +32,7 @@ public class BallBehavior : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        body = GetComponent<Rigidbody2D>();
         targetPostion = getRandomPosition();
         initialPosition();
     }
@@ -41,9 +43,12 @@ public class BallBehavior : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        Vector2 currentPos = gameObject.GetComponent<Transform>().position;
-
-        Vector2 currentPosition = body.position;
+        if(body == null)
+        {
+            Debug.LogError("Rigidbody2D is missing on " + gameObject.name);
+            return;
+        }
+        Vector2 currentPos = body.position;
 
         if (!onCooldown())
         {
@@ -62,7 +67,7 @@ public class BallBehavior : MonoBehaviour
             }
         }
 
-        float distance = Vector2.Distance(currentPosition, targetPostion);
+        float distance = Vector2.Distance(currentPos, targetPostion);
 
 
         if (distance > 0.1f)
@@ -119,11 +124,15 @@ public class BallBehavior : MonoBehaviour
         targetPostion = getRandomPosition();
         launching = false;
         rerouting = true;
+        body.linearVelocity = new Vector2(Random.Range(-2f, 2f), Random.Range(-2f, 2f));
     }
     public void launch()
     {
-
-        //targetPostion = target.transform.position;
+        if(target == null)
+        {
+            Debug.LogError("Target is not assigned in BallBehavior!");
+            return;
+        }
         Rigidbody2D targetBody = target.GetComponent<Rigidbody2D>();
         targetPostion = targetBody.position;
 
@@ -146,10 +155,6 @@ public class BallBehavior : MonoBehaviour
     public void setTarget(GameObject pin)
     {
         target = pin;
-        if (target != null)
-        {
-            targetPostion = target.transform.position;
-        }
     }
     public bool onCooldown()
     {
@@ -178,6 +183,7 @@ public class BallBehavior : MonoBehaviour
         if(collision.gameObject.tag == "Wall")
         {
             targetPostion = getRandomPosition();
+            body.linearVelocity += new Vector2(Random.Range(-1f, 1f),Random.Range(-1f, 1f)) * 0.5f;
         }
         if(collision.gameObject.tag == "Ball")
         {
@@ -191,6 +197,7 @@ public class BallBehavior : MonoBehaviour
         if (collision.gameObject.tag == "Wall")
         {
             targetPostion = getRandomPosition();
+            body.linearVelocity += new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f)) * 0.5f;
         }
        
     }
@@ -198,25 +205,33 @@ public class BallBehavior : MonoBehaviour
     public void Reroute(Collision2D collision)
     {
         GameObject otherBall = collision.gameObject;
-        if(rerouting == true)
+        if(rerouting)
         {
-            otherBall.GetComponent<BallBehavior>().rerouting = false;
+            BallBehavior otherBallBehavior = otherBall.GetComponent<BallBehavior>();
+            otherBallBehavior.rerouting = false;
 
             Rigidbody2D ballBody = otherBall.GetComponent<Rigidbody2D>();
             Vector2 contact = collision.GetContact(0).normal;
-            Vector2 direction = targetPostion - body.position;
+            Vector2 direction = body.linearVelocity.normalized;
 
-            targetPostion = Vector2.Reflect(direction, contact) + (contact * 0.5f);
+            Vector2 reflectedDirection = Vector2.Reflect(direction, contact);
+            targetPostion = body.position + reflectedDirection * 5f;
+
+            //targetPostion = Vector2.Reflect(direction, contact) + (contact * 0.5f);
 
             launching = false;
             float separationDistance = 0.3f;
             ballBody.position += contact * separationDistance;
 
+            body.linearVelocity = reflectedDirection * body.linearVelocity.magnitude;
+            StartCoroutine(ResetRerouting(otherBallBehavior));
         }
-        else
-        {
-            rerouting = true;
-        }
+    }
+
+    IEnumerator ResetRerouting(BallBehavior otherBallBehavior)
+    {
+        yield return new WaitForSeconds(0.2f);
+        otherBallBehavior.rerouting = true;
     }
 
 }

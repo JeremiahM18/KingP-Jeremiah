@@ -5,7 +5,7 @@ public class Pins : ScriptableObject
 {
     public Pin[] pins;
 
-    public int count()
+    public int getCount()
     {
         return pins.Length;
     }

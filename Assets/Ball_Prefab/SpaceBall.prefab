@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &1340596208592778517
+--- !u!1001 &6979281976330445358
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -50,19 +50,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1262538530842312713, guid: fd2687d3785835143af4f0e9c4db2638, type: 3}
       propertyPath: m_Name
-      value: Ball7
+      value: Ball2
       objectReference: {fileID: 0}
     - target: {fileID: 7126762076373288388, guid: fd2687d3785835143af4f0e9c4db2638, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 2612753881109755140, guid: 4a9e8471120e99c40b7767ef0ba3c88e, type: 3}
+      objectReference: {fileID: -7627733529822777162, guid: de4c8a57d9113034c851e0aea81a13c7, type: 3}
     - target: {fileID: 7268274071308859876, guid: fd2687d3785835143af4f0e9c4db2638, type: 3}
       propertyPath: maxSpeed
-      value: 20
-      objectReference: {fileID: 0}
-    - target: {fileID: 7268274071308859876, guid: fd2687d3785835143af4f0e9c4db2638, type: 3}
-      propertyPath: minSpeed
-      value: 3
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: -6663769735969788022, guid: fd2687d3785835143af4f0e9c4db2638, type: 3}
@@ -71,20 +67,20 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 1262538530842312713, guid: fd2687d3785835143af4f0e9c4db2638, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 7525142639661134385}
+      addedObject: {fileID: 7042447263673332473}
   m_SourcePrefab: {fileID: 100100000, guid: fd2687d3785835143af4f0e9c4db2638, type: 3}
---- !u!1 &225093381514196252 stripped
+--- !u!1 &8168988627098919463 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1262538530842312713, guid: fd2687d3785835143af4f0e9c4db2638, type: 3}
-  m_PrefabInstance: {fileID: 1340596208592778517}
+  m_PrefabInstance: {fileID: 6979281976330445358}
   m_PrefabAsset: {fileID: 0}
---- !u!58 &7525142639661134385
+--- !u!58 &7042447263673332473
 CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 225093381514196252}
+  m_GameObject: {fileID: 8168988627098919463}
   m_Enabled: 1
   serializedVersion: 3
   m_Density: 1
@@ -113,4 +109,4 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Radius: 4.3199997
+  m_Radius: 3.1949997
