@@ -1,14 +1,15 @@
 using System.Collections;
+using System.Net.Http.Headers;
 using UnityEngine;
 
 public class BallBehavior : MonoBehaviour
 {
-    public float minX = -7.0f;
-    public float minY = -6.0f;
-    public float maxX = 7.0f;
-    public float maxY = 6.0f;
-    public float minSpeed = 0.05f;
-    public float maxSpeed = 15.0f;
+    public float minX = -0.9469f;
+    public float minY = -0.68238f;
+    public float maxX = 0.0531f;
+    public float maxY = 0.44238f;
+    public float minSpeed = 0.04f;
+    public float maxSpeed = 7.0f;
     public Vector2 targetPostion;
 
     public int secondsToMaxSpeed;
@@ -43,13 +44,7 @@ public class BallBehavior : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        if(body == null)
-        {
-            Debug.LogError("Rigidbody2D is missing on " + gameObject.name);
-            return;
-        }
         Vector2 currentPos = body.position;
-
         if (!onCooldown())
         {
             if (launching)
@@ -62,6 +57,11 @@ public class BallBehavior : MonoBehaviour
                 }
             } else
             {
+                if(target != null)
+                {
+                    targetPostion = target.transform.position;
+                }
+
                 Debug.Log("Launching towards: " + targetPostion);
                 launch();
             }
@@ -88,9 +88,11 @@ public class BallBehavior : MonoBehaviour
             {
                 currentSpeed = Mathf.Lerp(minSpeed, maxSpeed, difficulty);
             }
+
             currentSpeed = currentSpeed * Time.deltaTime;
+            Vector2 direction = (targetPostion - currentPos).normalized;
             Vector2 newPosition = Vector2.MoveTowards(currentPos, targetPostion, currentSpeed);
-            transform.position = newPosition;
+            body.MovePosition(newPosition);
         }
         else
         {   //     You are at target
@@ -121,18 +123,20 @@ public class BallBehavior : MonoBehaviour
     {
         body = GetComponent<Rigidbody2D>();
         body.position = getRandomPosition();
+
+        transform.position = getRandomPosition();
         targetPostion = getRandomPosition();
         launching = false;
         rerouting = true;
-        body.linearVelocity = new Vector2(Random.Range(-2f, 2f), Random.Range(-2f, 2f));
     }
     public void launch()
     {
-        if(target == null)
+        if (target == null)
         {
             Debug.LogError("Target is not assigned in BallBehavior!");
             return;
         }
+
         Rigidbody2D targetBody = target.GetComponent<Rigidbody2D>();
         targetPostion = targetBody.position;
 
@@ -183,7 +187,9 @@ public class BallBehavior : MonoBehaviour
         if(collision.gameObject.tag == "Wall")
         {
             targetPostion = getRandomPosition();
-            body.linearVelocity += new Vector2(Random.Range(-1f, 1f),Random.Range(-1f, 1f)) * 0.5f;
+            //Vector2 contactNormal = collision.GetContact(0).normal;
+
+            //body.MovePosition(body.position + Vector2.Reflect(body.position, contactNormal));
         }
         if(collision.gameObject.tag == "Ball")
         {
@@ -196,8 +202,7 @@ public class BallBehavior : MonoBehaviour
         Debug.Log(this + " Collided with: " + collision.gameObject.tag);
         if (collision.gameObject.tag == "Wall")
         {
-            targetPostion = getRandomPosition();
-            body.linearVelocity += new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f)) * 0.5f;
+            Vector2 contactNormal = collision.GetContact(0).normal;
         }
        
     }
@@ -207,31 +212,19 @@ public class BallBehavior : MonoBehaviour
         GameObject otherBall = collision.gameObject;
         if(rerouting)
         {
-            BallBehavior otherBallBehavior = otherBall.GetComponent<BallBehavior>();
-            otherBallBehavior.rerouting = false;
+            otherBall.GetComponent<BallBehavior>().rerouting = false;
 
             Rigidbody2D ballBody = otherBall.GetComponent<Rigidbody2D>();
             Vector2 contact = collision.GetContact(0).normal;
-            Vector2 direction = body.linearVelocity.normalized;
-
-            Vector2 reflectedDirection = Vector2.Reflect(direction, contact);
-            targetPostion = body.position + reflectedDirection * 5f;
-
-            //targetPostion = Vector2.Reflect(direction, contact) + (contact * 0.5f);
+            targetPostion = Vector2.Reflect(targetPostion, contact).normalized;
 
             launching = false;
             float separationDistance = 0.3f;
             ballBody.position += contact * separationDistance;
-
-            body.linearVelocity = reflectedDirection * body.linearVelocity.magnitude;
-            StartCoroutine(ResetRerouting(otherBallBehavior));
+        }
+        else
+        {
+            rerouting = true;
         }
     }
-
-    IEnumerator ResetRerouting(BallBehavior otherBallBehavior)
-    {
-        yield return new WaitForSeconds(0.2f);
-        otherBallBehavior.rerouting = true;
-    }
-
 }

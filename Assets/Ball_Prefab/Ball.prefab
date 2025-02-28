@@ -78,7 +78,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: -5177059295058242668, guid: 3330739bd83e7ff419ceab00321f3354, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -111,8 +111,8 @@ MonoBehaviour:
   targetPostion: {x: 0, y: 0}
   secondsToMaxSpeed: 0
   target: {fileID: 4954610960700815250, guid: 34096a25ed0c8774998d8bc7a27c5d9d, type: 3}
-  minLaunchSpeed: 4
-  maxLaunchSpeed: 10
+  minLaunchSpeed: 0.2
+  maxLaunchSpeed: 5
   minTimeToLaunch: 0
   cooldown: 7
   launching: 0

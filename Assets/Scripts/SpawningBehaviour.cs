@@ -15,8 +15,8 @@ public class SpawningBehaviour : MonoBehaviour
     public float minY;
     public float maxY;
 
-    public float minSpawnTime = 0.5f;
-    public float maxSpawnTime = 3.0f;
+    public float minSpawnTime = 4.9f;
+    public float maxSpawnTime = 12.0f;
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -26,7 +26,7 @@ public class SpawningBehaviour : MonoBehaviour
         Invoke("spawnBall", spawnRatio);
     }
 
-    // Update is called once per frame
+    //Update is called once per frame
     //void Update()
     //{
     //    float currentTime = Time.time;
@@ -44,7 +44,7 @@ public class SpawningBehaviour : MonoBehaviour
         if (numVariants > 0)
         {
             int selection = Random.Range(0, numVariants);
-            Vector2 spawnPos = new Vector2(Random.Range(-2f, 2f), Random.Range(-2f, 2f));
+            Vector2 spawnPos = new Vector2(Random.Range(0.0f, 0.0f), Random.Range(minY, maxY));
             newObject = Instantiate(ballVariants[selection], spawnPos, Quaternion.identity);
             BallBehavior ballBehavior = newObject.GetComponent<BallBehavior>();
            
@@ -62,7 +62,7 @@ public class SpawningBehaviour : MonoBehaviour
         Pin selectedPin = pinsDB.getPin(CharacterManager.selection);
         if (selectedPin != null)
         {
-            if(targetObject != null)
+            if(targetObject == null)
             {
                 targetObject = Instantiate(selectedPin.prefab, new Vector2(0.0f, 0.0f), Quaternion.identity);
             }
