@@ -210,17 +210,25 @@ public class BallBehavior : MonoBehaviour
     public void Reroute(Collision2D collision)
     {
         GameObject otherBall = collision.gameObject;
+        Rigidbody2D otherBody = otherBall.GetComponent<Rigidbody2D>();
+
         if(rerouting)
         {
-            otherBall.GetComponent<BallBehavior>().rerouting = false;
+            rerouting = false;
+            otherBody.GetComponent<BallBehavior>().rerouting = false;
 
-            Rigidbody2D ballBody = otherBall.GetComponent<Rigidbody2D>();
-            Vector2 contact = collision.GetContact(0).normal;
-            targetPostion = Vector2.Reflect(targetPostion, contact).normalized;
+            Vector2 contactNormal = collision.GetContact(0).normal;
 
-            launching = false;
+            Vector2 newDirection = (contactNormal + Random.insideUnitCircle * 0.5f).normalized;
+            targetPostion = body.position + newDirection * 1.5f;
+
+            
             float separationDistance = 0.3f;
-            ballBody.position += contact * separationDistance;
+            body.position += contactNormal * separationDistance;
+            otherBody.position -= contactNormal * separationDistance;
+
+            otherBody.GetComponent <BallBehavior>().targetPostion = otherBody.position + 
+                (-contactNormal + Random.insideUnitCircle * 0.5f).normalized * 1.5f;
         }
         else
         {
